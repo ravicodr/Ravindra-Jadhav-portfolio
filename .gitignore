@@ -42,3 +42,15 @@ next-env.d.ts
 
 # OS
 Thumbs.db
+.env.local
+.env
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env*.local
+
+# Never commit secrets
+.env
+.env.local
+.env*.local
