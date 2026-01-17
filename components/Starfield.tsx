@@ -29,8 +29,8 @@ export default function Starfield() {
       opacity: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * (canvas?.width || 0);
+        this.y = Math.random() * (canvas?.height || 0);
         this.size = Math.random() * 2;
         this.speed = Math.random() * 0.5;
         this.opacity = Math.random();
