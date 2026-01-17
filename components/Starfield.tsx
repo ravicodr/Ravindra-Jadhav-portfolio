@@ -54,9 +54,7 @@ export default function Starfield() {
 
     // Create stars
     const stars: Star[] = [];
-    const starCount = 200;
-
-    for (let i = 0; i < starCount; i++) {
+    for (let i = 0; i < 200; i++) {
       stars.push(new Star());
     }
 
@@ -64,12 +62,12 @@ export default function Starfield() {
     function animate() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      stars.forEach(star => {
+      
+      stars.forEach((star) => {
         star.update();
         star.draw();
       });
-
+      
       requestAnimationFrame(animate);
     }
 
@@ -81,8 +79,10 @@ export default function Starfield() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
-      <canvas ref={canvasRef} className="w-full h-full" />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none"
+      style={{ zIndex: 0 }}
+    />
   );
 }
