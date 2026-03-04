@@ -16,58 +16,49 @@ const contactSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    
+
     // Validate input
     const validatedData = contactSchema.parse(body);
 
-    // Connect to database
-    await connectDB();
-
-    // Save to database
-    const contact = await Contact.create(validatedData);
-
-    // Send email notification using Resend
+    // Try to save to MongoDB — optional, won't block email if DB is down
     try {
-      await resend.emails.send({
-        from: 'Portfolio Contact <onboarding@resend.dev>',
-        to: process.env.CONTACT_EMAIL || 'your-email@example.com',
-        subject: `New Contact: ${validatedData.subject}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #6366f1;">New Contact Form Submission</h2>
-            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p><strong>Name:</strong> ${validatedData.name}</p>
-              <p><strong>Email:</strong> ${validatedData.email}</p>
-              <p><strong>Subject:</strong> ${validatedData.subject}</p>
-            </div>
-            <div style="background: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
-              <h3>Message:</h3>
-              <p style="line-height: 1.6;">${validatedData.message}</p>
-            </div>
-            <p style="color: #6b7280; font-size: 12px; margin-top: 20px;">
-              Received at ${new Date().toLocaleString()}
-            </p>
-          </div>
-        `,
-      });
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-      // Continue even if email fails - contact is saved in DB
+      await connectDB();
+      await Contact.create(validatedData);
+    } catch (dbError) {
+      console.warn('MongoDB unavailable, skipping DB save:', dbError);
     }
 
+    // Send email via Resend — this is the critical step
+    await resend.emails.send({
+      from: 'Portfolio Contact <onboarding@resend.dev>',
+      to: process.env.CONTACT_EMAIL || 'rjadha757@gmail.com',
+      subject: `New Contact: ${validatedData.subject}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #6366f1;">New Contact Form Submission</h2>
+          <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>Name:</strong> ${validatedData.name}</p>
+            <p><strong>Email:</strong> ${validatedData.email}</p>
+            <p><strong>Subject:</strong> ${validatedData.subject}</p>
+          </div>
+          <div style="background: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+            <h3>Message:</h3>
+            <p style="line-height: 1.6;">${validatedData.message}</p>
+          </div>
+          <p style="color: #6b7280; font-size: 12px; margin-top: 20px;">
+            Received at ${new Date().toLocaleString()}
+          </p>
+        </div>
+      `,
+    });
+
     return NextResponse.json(
-      { 
-        message: 'Message sent successfully!',
-        contact: {
-          id: contact._id,
-          name: contact.name,
-        }
-      },
+      { message: 'Message sent successfully!' },
       { status: 201 }
     );
   } catch (error: any) {
     console.error('Contact API error:', error);
-    
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: error.errors[0].message },
