@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ravindra Jadhav — Full Stack MERN Developer</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 13px;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.5;
+  }
+
+  /* ── Layout ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 36px 40px;
+  }
+
+  /* ── Header ── */
+  .header {
+    border-bottom: 3px solid #6366f1;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
+  }
+  .header .title {
+    font-size: 14px;
+    color: #6366f1;
+    font-weight: 600;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+  }
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #444;
+  }
+  .contact-row a { color: #6366f1; text-decoration: none; }
+  .contact-row span::before { content: '•'; margin-right: 6px; color: #6366f1; }
+  .contact-row span:first-child::before { content: ''; margin: 0; }
+
+  /* ── Sections ── */
+  section { margin-bottom: 18px; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #6366f1;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+  }
+
+  /* ── Summary ── */
+  .summary p {
+    color: #374151;
+    line-height: 1.65;
+  }
+  .summary strong { color: #111; }
+
+  /* ── Experience ── */
+  .exp-item { margin-bottom: 14px; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .exp-header .left h3 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #111;
+  }
+  .exp-header .left .company {
+    font-size: 12.5px;
+    color: #6366f1;
+    font-weight: 600;
+  }
+  .exp-header .right {
+    text-align: right;
+    font-size: 11.5px;
+    color: #6b7280;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .exp-header .right .dates { font-weight: 600; color: #374151; }
+  ul.achievements {
+    margin-top: 6px;
+    padding-left: 0;
+    list-style: none;
+  }
+  ul.achievements li {
+    position: relative;
+    padding-left: 14px;
+    color: #374151;
+    margin-bottom: 3px;
+    line-height: 1.55;
+  }
+  ul.achievements li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: #6366f1;
+    font-size: 11px;
+    top: 1px;
+  }
+
+  /* ── Projects ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .project-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px 12px;
+    position: relative;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #ec4899);
+    border-radius: 6px 6px 0 0;
+  }
+  .project-card h4 {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 3px;
+  }
+  .project-card .project-tech {
+    font-size: 10.5px;
+    color: #6366f1;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .project-card p {
+    font-size: 11.5px;
+    color: #4b5563;
+    line-height: 1.5;
+  }
+  .project-card .project-link {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 10.5px;
+    color: #6366f1;
+    text-decoration: none;
+  }
+  .live-badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 1px 5px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 9999px;
+    font-weight: 700;
+    margin-left: 5px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Skills ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .skill-group { }
+  .skill-group .skill-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 3px;
+  }
+  .skill-group .skill-tags {
+    font-size: 11px;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+
+  /* ── Education ── */
+  .edu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .edu-item .edu-left h4 { font-size: 13px; font-weight: 700; color: #111; }
+  .edu-item .edu-left p { font-size: 12px; color: #6b7280; margin-top: 1px; }
+  .edu-item .edu-right { font-size: 11.5px; color: #6b7280; text-align: right; white-space: nowrap; flex-shrink: 0; }
+
+  /* ── Print ── */
+  @media print {
+    body { font-size: 12px; }
+    .page { padding: 24px 28px; max-width: 100%; }
+    a { color: #6366f1 !important; }
+    .project-card::before { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .live-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @page {
+    margin: 0.4in 0.4in;
+    size: A4;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <h1>Ravindra Jadhav</h1>
+    <div class="title">Full Stack MERN Developer &nbsp;|&nbsp; AI Integration Specialist &nbsp;|&nbsp; SaaS &amp; Enterprise Architect</div>
+    <div class="contact-row">
+      <span>+91 99809 24267</span>
+      <span><a href="mailto:rjadha757@gmail.com">rjadha757@gmail.com</a></span>
+      <span>Mumbai / Navi Mumbai, India</span>
+      <span><a href="https://github.com/ravicodr">github.com/ravicodr</a></span>
+      <span><a href="https://linkedin.com/in/ravindra-jadhav">linkedin.com/in/ravindra-jadhav</a></span>
+      <span><a href="https://devhire-india.vercel.app">Portfolio</a></span>
+    </div>
+  </header>
+
+  <!-- ══ SUMMARY ══ -->
+  <section class="summary">
+    <div class="section-title">Professional Summary</div>
+    <p>
+      Results-driven <strong>Full Stack MERN Developer with 4+ years</strong> of experience architecting and delivering scalable web applications, SaaS platforms, and enterprise systems. Proven track record building production-grade solutions with <strong>Next.js 14, TypeScript, Node.js, and MongoDB</strong>. Specialised in <strong>AI integration</strong> (OpenAI, Google Generative AI), payment gateway implementation (Stripe, PayPal, Razorpay), and real-time systems serving <strong>10K+ daily active users</strong>. Comfortable leading end-to-end development — from database design to deployment on Vercel and Railway.
+    </p>
+  </section>
+
+  <!-- ══ EXPERIENCE ══ -->
+  <section>
+    <div class="section-title">Work Experience</div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="left">
+          <h3>Software Developer</h3>
+          <div class="company">Infine Ascents</div>
+        </div>
+        <div class="right">
+          <div class="dates">Dec 2024 – Present</div>
+          <div>Mumbai, India</div>
+        </div>
+      </div>
+      <ul class="achievements">
+        <li>Architected and developed a comprehensive ERP system for Reliable Sign Supply, improving operational efficiency by <strong>35%</strong> through intelligent automation and real-time analytics.</li>
+        <li>Engineered robust JWT authentication and role-based authorization (RBAC) securing <strong>50+ system users</strong> with zero security incidents.</li>
+        <li>Optimised MongoDB aggregation queries achieving <strong>40% faster response times</strong> under high-concurrency workloads.</li>
+        <li>Implemented Docker containerisation pipeline reducing deployment time by <strong>60%</strong> and enabling zero-downtime releases.</li>
+        <li>Delivered all custom modules with <strong>98% on-time delivery rate</strong>; consistently exceeded client expectations.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="left">
+          <h3>Software Developer</h3>
+          <div class="company">Site Genius</div>
+        </div>
+        <div class="right">
+          <div class="dates">Jan 2022 – Jan 2024</div>
+          <div>Mumbai, India</div>
+        </div>
+      </div>
+      <ul class="achievements">
+        <li>Developed full-stack global e-commerce platform serving <strong>10K+ daily active users</strong> across 15+ countries with multi-currency support.</li>
+        <li>Built scalable RESTful APIs handling <strong>100K+ daily requests</strong> with sub-200ms response times using Node.js, Express, and Redis caching.</li>
+        <li>Integrated Stripe and PayPal gateways processing <strong>$500K+ monthly transactions</strong> with 99.9% payment success rate.</li>
+        <li>Engineered dynamic React components and optimised rendering, improving UI performance by <strong>45%</strong> and reducing cart abandonment by <strong>25%</strong>.</li>
+        <li>Implemented secure authentication flows (JWT + bcrypt) reducing unauthorised access incidents by <strong>80%</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="left">
+          <h3>Software Developer &amp; Technical Mentor</h3>
+          <div class="company">Maptek Software</div>
+        </div>
+        <div class="right">
+          <div class="dates">Feb 2024 – Mar 2024</div>
+          <div>Mumbai, India</div>
+        </div>
+      </div>
+      <ul class="achievements">
+        <li>Contributed to CRM application development supporting <strong>200+ concurrent users</strong> with real-time WebSocket updates.</li>
+        <li>Mentored 3 junior developers, improving team code quality by <strong>40%</strong> through structured code reviews and pair programming.</li>
+        <li>Built reusable component library reducing feature development time by <strong>30%</strong> across the team.</li>
+        <li>Implemented automated testing suite achieving <strong>85% code coverage</strong> with Jest and Mocha.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ══ -->
+  <section>
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-label">Frontend</div>
+        <div class="skill-tags">React.js, Next.js 14, Redux Toolkit, TypeScript, JavaScript (ES6+), Tailwind CSS, HTML5, CSS3</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Backend</div>
+        <div class="skill-tags">Node.js, Express.js, NestJS, RESTful APIs, WebSocket / Socket.io, JWT, bcrypt, RBAC</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Database</div>
+        <div class="skill-tags">MongoDB, Mongoose, MySQL, TypeORM, Query Optimisation, Aggregation Pipelines</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">AI &amp; Integrations</div>
+        <div class="skill-tags">OpenAI GPT-3.5, Google Generative AI, Stripe, PayPal, Razorpay, TaxJar, Shippo, Cloudinary, AWS S3</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">DevOps &amp; Tools</div>
+        <div class="skill-tags">Git, GitHub, Docker, CI/CD, Vercel, Railway, Postman, Jest, Mocha</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Architecture</div>
+        <div class="skill-tags">Microservices, MVC, SOLID Principles, Clean Architecture, Agile/Scrum, API Design</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECTS ══ -->
+  <section>
+    <div class="section-title">Key Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <h4>AI-Powered Enterprise ERP Platform <span class="live-badge">LIVE</span></h4>
+        <div class="project-tech">Next.js 14 · TypeScript · MongoDB · OpenAI GPT-3.5 · Recharts</div>
+        <p>Full-stack ERP with AI-generated product descriptions, inventory forecasting, and real-time analytics. Serves 50+ users with role-based access.</p>
+        <a class="project-link" href="https://enterprise-erp-business-management-seven.vercel.app">enterprise-erp-business-management-seven.vercel.app</a>
+      </div>
+
+      <div class="project-card">
+        <h4>DevHire India — AI Job Board <span class="live-badge">LIVE</span></h4>
+        <div class="project-tech">Next.js 14 · MongoDB · NextAuth.js · Razorpay · Google Generative AI · Daily.co</div>
+        <p>India's premier MERN/JS job board with AI interview prep, video interviews, employer dashboards, and 4-tier Razorpay payment integration.</p>
+        <a class="project-link" href="https://devhire-india.vercel.app">devhire-india.vercel.app</a>
+      </div>
+
+      <div class="project-card">
+        <h4>IWIYGI — Full-Stack Marketplace <span class="live-badge">LIVE</span></h4>
+        <div class="project-tech">Next.js 14 · NestJS · MySQL · Stripe · PayPal · TaxJar · Shippo · Socket.io</div>
+        <p>Production marketplace with dual payment gateways, automated tax compliance, real-time shipping rates, Google Maps listings, and live messaging.</p>
+        <a class="project-link" href="https://httpdocs-plum.vercel.app">httpdocs-plum.vercel.app</a>
+      </div>
+
+      <div class="project-card">
+        <h4>AI Email Summarizer <span class="live-badge">LIVE</span></h4>
+        <div class="project-tech">React 18 · Node.js · Express · OpenAI GPT-3.5 · Neon PostgreSQL · Drizzle ORM</div>
+        <p>Workflow automation that processes 12+ emails in &lt;20s with AI summaries, 7-category classification, keyword extraction, and CSV export.</p>
+        <a class="project-link" href="https://github.com/ravicodr/email-summarizer-workflow">github.com/ravicodr/email-summarizer-workflow</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ EDUCATION & CERTS ══ -->
+  <section>
+    <div class="section-title">Education &amp; Certifications</div>
+
+    <div class="edu-item">
+      <div class="edu-left">
+        <h4>B.E. in Electronics &amp; Telecommunication</h4>
+        <p>Dr. D.Y. Patil College of Engineering, Pune</p>
+      </div>
+      <div class="edu-right">2011 – 2015</div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-left">
+        <h4>Relevel Certified Full Stack Developer</h4>
+        <p>Full Stack Web Development — MERN Stack Certification</p>
+      </div>
+      <div class="edu-right">May 2023</div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

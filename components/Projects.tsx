@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { ExternalLink, Github, Layers, ShoppingCart, Building2, Zap, Users, Lock, Database, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, Layers, ShoppingCart, Building2, Zap, Users, Lock, Database, Sparkles, Globe, Code2 } from 'lucide-react';
 
 interface Project {
   id: number;
@@ -20,159 +20,191 @@ interface Project {
   featured: boolean;
 }
 
+// Defined outside component so it can be used as initial state — no loading flash
+const fallbackProjects: Project[] = [
+  {
+    id: 1,
+    title: 'AI-Powered Enterprise ERP Platform',
+    description: 'Full-stack AI-powered ERP system for inventory management, order tracking, and business analytics with intelligent automation and real-time insights.',
+    problem: 'Businesses struggle with manual inventory tracking, inefficient order processing, lack of real-time insights, and inability to predict stock requirements, leading to 35% operational inefficiency.',
+    solution: 'Built comprehensive ERP with AI-powered features using OpenAI GPT-3.5 for intelligent product descriptions, inventory optimization, demand forecasting, and conversational business queries. Integrated real-time analytics dashboard with automated alerts.',
+    impact: [
+      '35% operational efficiency improvement',
+      '60% reduction in stockout incidents',
+      '500+ daily orders processing capacity',
+      '50+ concurrent users with role-based access',
+      'AI reduces description writing time by 80%',
+      'Predictive analytics for inventory optimization',
+    ],
+    technologies: ['Next.js 14', 'TypeScript', 'MongoDB', 'OpenAI GPT-3.5', 'Tailwind CSS', 'Recharts', 'JWT', 'bcrypt'],
+    category: 'enterprise',
+    icon: Building2,
+    gradient: 'from-cosmic-purple to-galaxy-blue',
+    demoUrl: 'https://enterprise-erp-business-management-seven.vercel.app/',
+    githubUrl: 'https://github.com/ravicodr/Enterprise-ERP-Business-Management-System',
+    featured: true,
+  },
+  {
+    id: 7,
+    title: 'DevHire India — AI-Powered Job Board',
+    description: "India's premier job board platform built for MERN Stack & JavaScript developers, featuring AI-powered interview prep, video interviews, employer dashboards, and Razorpay payment integration.",
+    problem: "India's developer ecosystem lacked a niche job board for MERN/JavaScript talent. Generic platforms had poor filtering, no AI interview preparation, no India-specific payment flows, and no employer approval workflows — leaving both developers and hiring companies underserved.",
+    solution: 'Built a full-stack job board with Next.js 14 App Router, MongoDB/Mongoose for data, NextAuth.js authentication, Razorpay for INR payment tiers, Google Generative AI for AI interview prep, Daily.co for live video interviews, Cloudinary for media, and Nodemailer for transactional emails. Includes role-based dashboards for job seekers, employers, and admins.',
+    impact: [
+      'AI-powered text & video interview preparation for candidates',
+      '4 revenue tiers from ₹2,499 to ₹24,999/mo with Razorpay',
+      'Employer dashboard with job management & applicant tracking',
+      'Admin panel for job approval & platform moderation',
+      'Recharts analytics for employer hiring insights',
+      'Real-time email notifications via Nodemailer',
+      'SEO-optimized architecture for organic developer traffic',
+    ],
+    technologies: ['Next.js 14', 'TypeScript', 'MongoDB', 'Mongoose', 'NextAuth.js', 'Razorpay', 'Google Generative AI', 'Daily.co', 'Cloudinary', 'Nodemailer', 'Recharts', 'Tailwind CSS'],
+    category: 'saas',
+    icon: Layers,
+    gradient: 'from-nebula-pink to-moon-glow',
+    demoUrl: 'https://devhire-india.vercel.app',
+    githubUrl: '',
+    featured: true,
+  },
+  {
+    id: 6,
+    title: 'IWIYGI — Full-Stack Marketplace Platform',
+    description: 'Production-grade marketplace connecting buyers and sellers with multi-payment gateways, automated tax compliance, real-time shipping rates, geo-location listings, and live messaging — deployed 24/7 on Vercel + Railway.',
+    problem: 'Client needed a scalable, feature-complete marketplace with complex integrations: multi-payment gateway support (Stripe & PayPal), automated tax compliance across regions, real-time shipping rate calculation, location-based listing search, and live buyer-seller communication — all requiring always-on, zero-downtime infrastructure.',
+    solution: 'Built a production-grade marketplace with Next.js 14 frontend (Redux Toolkit, Google Maps, Tailwind CSS) and NestJS backend (TypeORM, MySQL). Integrated Stripe & PayPal for payments, TaxJar for automated tax compliance, Shippo for real-time shipping rates, Socket.io for live messaging, AWS S3 & Google Cloud Storage for media, and Brevo for transactional emails. Deployed frontend on Vercel and backend on Railway for permanent 24/7 hosting.',
+    impact: [
+      'Live 24/7 on Vercel + Railway — no downtime, no manual server management',
+      'Dual payment gateway: Stripe & PayPal with secure checkout flow',
+      'Automated tax compliance via TaxJar across multiple regions',
+      'Real-time shipping rate calculation with Shippo API',
+      'Google Maps integration for location-based listing discovery',
+      'Real-time buyer-seller messaging powered by Socket.io',
+      'Scalable media storage with AWS S3 & Google Cloud Storage',
+    ],
+    technologies: ['Next.js 14', 'NestJS', 'TypeScript', 'MySQL', 'TypeORM', 'Stripe', 'PayPal', 'TaxJar', 'Shippo', 'Socket.io', 'Redux Toolkit', 'Google Maps API', 'AWS S3', 'Tailwind CSS'],
+    category: 'ecommerce',
+    icon: ShoppingCart,
+    gradient: 'from-galaxy-blue to-nebula-pink',
+    demoUrl: 'https://httpdocs-plum.vercel.app',
+    githubUrl: '',
+    featured: true,
+  },
+  {
+    id: 2,
+    title: 'Global E-Commerce Marketplace',
+    description: 'Multi-currency e-commerce platform supporting international shipping, payment processing, and real-time inventory across 15+ countries.',
+    problem: 'Traditional e-commerce struggled with multi-currency support, international shipping complexities, and scaling to handle 10K+ concurrent users.',
+    solution: 'Engineered scalable microservices architecture with Stripe/PayPal integration, automated currency conversion, optimized CDN delivery, and Redis caching.',
+    impact: [
+      'Serving 10,000+ daily active users',
+      'Processing $500K+ monthly transactions',
+      '100K+ API requests daily with <200ms response',
+      '25% reduction in cart abandonment',
+      '99.9% payment success rate',
+    ],
+    technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'PayPal', 'Redis', 'AWS S3', 'Material-UI'],
+    category: 'ecommerce',
+    icon: ShoppingCart,
+    gradient: 'from-galaxy-blue to-nebula-pink',
+    demoUrl: '',
+    githubUrl: '',
+    featured: false,
+  },
+  {
+    id: 3,
+    title: 'Real-Time CRM Analytics Dashboard',
+    description: 'Enterprise CRM with customer lifecycle management, sales pipeline tracking, and predictive analytics for 200+ concurrent users.',
+    problem: 'Sales teams lacked unified customer view, manual data entry caused errors, and no actionable insights for pipeline optimization.',
+    solution: 'Developed modular CRM with WebSocket real-time updates, automated lead scoring, interactive analytics dashboards, and customizable workflow automation.',
+    impact: [
+      '200+ concurrent users supported',
+      '40% improvement in sales team productivity',
+      '85% automated data accuracy',
+      '30% faster deal closure rates',
+      'Real-time collaboration features',
+    ],
+    technologies: ['Next.js', 'Express', 'MongoDB', 'WebSocket', 'D3.js', 'Node.js', 'JWT', 'Tailwind CSS'],
+    category: 'saas',
+    icon: Layers,
+    gradient: 'from-nebula-pink to-moon-glow',
+    demoUrl: '',
+    githubUrl: '',
+    featured: false,
+  },
+  {
+    id: 4,
+    title: 'AI-Powered Task Management SaaS',
+    description: 'Next-gen project management tool with AI task prioritization, team collaboration, time tracking, and intelligent workload distribution.',
+    problem: 'Teams struggled with task prioritization, unbalanced workloads, missed deadlines, and lack of visibility into project health.',
+    solution: 'Built smart task management platform using Next.js 14 with AI-driven priority recommendations, drag-and-drop boards, real-time notifications, and automated reporting.',
+    impact: [
+      '60% improvement in task completion rates',
+      'AI reduces planning time by 45%',
+      'Supporting 1000+ active projects',
+      'Smart workload balancing across teams',
+      'Integrated with Slack, Jira, GitHub',
+    ],
+    technologies: ['Next.js 14', 'TypeScript', 'MongoDB', 'OpenAI API', 'Framer Motion', 'Tailwind CSS', 'Next-Auth', 'Prisma'],
+    category: 'saas',
+    icon: Sparkles,
+    gradient: 'from-moon-glow to-cosmic-purple',
+    demoUrl: '',
+    githubUrl: '',
+    featured: false,
+  },
+  {
+    id: 5,
+    title: 'AI Email Summarizer Workflow',
+    description: 'Intelligent email management system with OpenAI-powered summarization, smart categorization, keyword extraction, and PostgreSQL persistence.',
+    problem: 'Email overload leads to missed important messages, time wasted reading lengthy emails, and difficulty organizing communications by priority and category.',
+    solution: 'Built full-stack workflow automation using OpenAI GPT-3.5 for intelligent 2-3 sentence summaries, automatic categorization into 7 types (Meeting, Invoice, Support, Newsletter, etc.), keyword extraction, and Neon PostgreSQL database with real-time filtering and CSV export capabilities.',
+    impact: [
+      'Processes 12+ emails with AI summaries in under 20 seconds',
+      'Smart categorization across 7+ email types',
+      'Keyword extraction for quick scanning',
+      'CSV export for data portability',
+      'Re-summarize on demand for context changes',
+      'RESTful API with comprehensive endpoints',
+    ],
+    technologies: ['React 18', 'TypeScript', 'Node.js', 'Express', 'OpenAI GPT-3.5', 'Neon PostgreSQL', 'Drizzle ORM', 'Vite'],
+    category: 'saas',
+    icon: Sparkles,
+    gradient: 'from-cosmic-purple to-galaxy-blue',
+    demoUrl: 'https://email-summarizer-workflow--bloodthrone9.replit.app',
+    githubUrl: 'https://github.com/ravicodr/email-summarizer-workflow',
+    featured: true,
+  },
+];
+
 export default function Projects() {
   const [filter, setFilter] = useState('all');
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Initialize with fallback data — projects render instantly, no loading flash
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
 
   useEffect(() => {
+    // Fetch from DB in background; only replace if DB has data
     fetch('/api/projects')
       .then((res) => res.json())
       .then((data) => {
         if (data.projects && data.projects.length > 0) {
           setProjects(data.projects);
-        } else {
-          // Use fallback projects if none in database
-          setProjects(fallbackProjects);
         }
-        setLoading(false);
       })
-      .catch((error) => {
-        console.error('Failed to fetch projects:', error);
-        setProjects(fallbackProjects);
-        setLoading(false);
+      .catch(() => {
+        // Fallback already showing — do nothing
       });
   }, []);
 
-  const fallbackProjects: Project[] = [
-    {
-      id: 1,
-      title: 'AI-Powered Enterprise ERP Platform',
-      description: 'Full-stack AI-powered ERP system for inventory management, order tracking, and business analytics with intelligent automation and real-time insights.',
-      problem: 'Businesses struggle with manual inventory tracking, inefficient order processing, lack of real-time insights, and inability to predict stock requirements, leading to 35% operational inefficiency.',
-      solution: 'Built comprehensive ERP with AI-powered features using OpenAI GPT-3.5 for intelligent product descriptions, inventory optimization, demand forecasting, and conversational business queries. Integrated real-time analytics dashboard with automated alerts.',
-      impact: [
-        '35% operational efficiency improvement',
-        '60% reduction in stockout incidents',
-        '500+ daily orders processing capacity',
-        '50+ concurrent users with role-based access',
-        'AI reduces description writing time by 80%',
-        'Predictive analytics for inventory optimization',
-      ],
-      technologies: ['Next.js 14', 'TypeScript', 'MongoDB', 'OpenAI GPT-3.5', 'Tailwind CSS', 'Recharts', 'JWT', 'bcrypt'],
-      category: 'enterprise',
-      icon: Building2,
-      gradient: 'from-cosmic-purple to-galaxy-blue',
-      demoUrl: 'https://enterprise-erp-business-management-seven.vercel.app/',
-      githubUrl: 'https://github.com/ravicodr/Enterprise-ERP-Business-Management-System',
-      featured: true,
-    },
-    {
-      id: 2,
-      title: 'Global E-Commerce Marketplace',
-      description: 'Multi-currency e-commerce platform supporting international shipping, payment processing, and real-time inventory across 15+ countries.',
-      problem: 'Traditional e-commerce struggled with multi-currency support, international shipping complexities, and scaling to handle 10K+ concurrent users.',
-      solution: 'Engineered scalable microservices architecture with Stripe/PayPal integration, automated currency conversion, optimized CDN delivery, and Redis caching.',
-      impact: [
-        'Serving 10,000+ daily active users',
-        'Processing $500K+ monthly transactions',
-        '100K+ API requests daily with <200ms response',
-        '25% reduction in cart abandonment',
-        '99.9% payment success rate',
-      ],
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'PayPal', 'Redis', 'AWS S3', 'Material-UI'],
-      category: 'ecommerce',
-      icon: ShoppingCart,
-      gradient: 'from-galaxy-blue to-nebula-pink',
-      demoUrl: '',
-      githubUrl: '',
-      featured: false,
-    },
-    {
-      id: 3,
-      title: 'Real-Time CRM Analytics Dashboard',
-      description: 'Enterprise CRM with customer lifecycle management, sales pipeline tracking, and predictive analytics for 200+ concurrent users.',
-      problem: 'Sales teams lacked unified customer view, manual data entry caused errors, and no actionable insights for pipeline optimization.',
-      solution: 'Developed modular CRM with WebSocket real-time updates, automated lead scoring, interactive analytics dashboards, and customizable workflow automation.',
-      impact: [
-        '200+ concurrent users supported',
-        '40% improvement in sales team productivity',
-        '85% automated data accuracy',
-        '30% faster deal closure rates',
-        'Real-time collaboration features',
-      ],
-      technologies: ['Next.js', 'Express', 'MongoDB', 'WebSocket', 'D3.js', 'Node.js', 'JWT', 'Tailwind CSS'],
-      category: 'saas',
-      icon: Layers,
-      gradient: 'from-nebula-pink to-moon-glow',
-      demoUrl: '',
-      githubUrl: '',
-      featured: false,
-    },
-    {
-      id: 4,
-      title: 'AI-Powered Task Management SaaS',
-      description: 'Next-gen project management tool with AI task prioritization, team collaboration, time tracking, and intelligent workload distribution.',
-      problem: 'Teams struggled with task prioritization, unbalanced workloads, missed deadlines, and lack of visibility into project health.',
-      solution: 'Built smart task management platform using Next.js 14 with AI-driven priority recommendations, drag-and-drop boards, real-time notifications, and automated reporting.',
-      impact: [
-        '60% improvement in task completion rates',
-        'AI reduces planning time by 45%',
-        'Supporting 1000+ active projects',
-        'Smart workload balancing across teams',
-        'Integrated with Slack, Jira, GitHub',
-      ],
-      technologies: ['Next.js 14', 'TypeScript', 'MongoDB', 'OpenAI API', 'Framer Motion', 'Tailwind CSS', 'Next-Auth', 'Prisma'],
-      category: 'saas',
-      icon: Sparkles,
-      gradient: 'from-moon-glow to-cosmic-purple',
-      demoUrl: '',
-      githubUrl: '',
-      featured: false,
-    },
-    {
-      id: 5,
-      title: 'AI Email Summarizer Workflow',
-      description: 'Intelligent email management system with OpenAI-powered summarization, smart categorization, keyword extraction, and PostgreSQL persistence.',
-      problem: 'Email overload leads to missed important messages, time wasted reading lengthy emails, and difficulty organizing communications by priority and category.',
-      solution: 'Built full-stack workflow automation using OpenAI GPT-3.5 for intelligent 2-3 sentence summaries, automatic categorization into 7 types (Meeting, Invoice, Support, Newsletter, etc.), keyword extraction, and Neon PostgreSQL database with real-time filtering and CSV export capabilities.',
-      impact: [
-        'Processes 12+ emails with AI summaries in under 20 seconds',
-        'Smart categorization across 7+ email types',
-        'Keyword extraction for quick scanning',
-        'CSV export for data portability',
-        'Re-summarize on demand for context changes',
-        'RESTful API with comprehensive endpoints',
-      ],
-      technologies: ['React 18', 'TypeScript', 'Node.js', 'Express', 'OpenAI GPT-3.5', 'Neon PostgreSQL', 'Drizzle ORM', 'Vite'],
-      category: 'saas',
-      icon: Sparkles,
-      gradient: 'from-cosmic-purple to-galaxy-blue',
-      demoUrl: 'https://email-summarizer-workflow--bloodthrone9.replit.app',
-      githubUrl: 'https://github.com/ravicodr/email-summarizer-workflow',
-      featured: true,
-    },
-  ];
-
-  if (loading) {
-    return (
-      <section id="projects" className="py-20 px-[5%]">
-        <div className="max-w-[1400px] mx-auto text-center">
-          <div className="animate-pulse">Loading projects...</div>
-        </div>
-      </section>
-    );
-  }
-
   const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'enterprise', label: 'Enterprise' },
-    { id: 'ecommerce', label: 'E-Commerce' },
-    { id: 'saas', label: 'SaaS' },
+    { id: 'all', label: 'All Projects', count: projects.length },
+    { id: 'enterprise', label: 'Enterprise', count: projects.filter(p => p.category === 'enterprise').length },
+    { id: 'ecommerce', label: 'E-Commerce', count: projects.filter(p => p.category === 'ecommerce').length },
+    { id: 'saas', label: 'SaaS', count: projects.filter(p => p.category === 'saas').length },
   ];
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
+  const filteredProjects = filter === 'all'
+    ? projects
     : projects.filter(p => p.category === filter);
 
   return (
@@ -206,13 +238,18 @@ export default function Projects() {
               onClick={() => setFilter(cat.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-6 py-3 rounded-full font-semibold transition-all ${
+              className={`px-6 py-3 rounded-full font-semibold transition-all flex items-center gap-2 ${
                 filter === cat.id
                   ? 'bg-gradient-to-r from-cosmic-purple to-nebula-pink text-white shadow-lg shadow-cosmic-purple/50'
                   : 'glass-effect text-text-dim hover:text-white hover:border-cosmic-purple/50'
               }`}
             >
               {cat.label}
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+                filter === cat.id ? 'bg-white/20' : 'bg-white/10 text-text-dim'
+              }`}>
+                {cat.count}
+              </span>
             </motion.button>
           ))}
         </motion.div>
@@ -228,32 +265,47 @@ export default function Projects() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="relative group"
             >
-              <div className="glass-effect rounded-2xl p-8 hover:glow-border transition-all h-full relative overflow-hidden">
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="px-3 py-1 bg-gradient-to-r from-moon-glow to-cosmic-purple rounded-full text-xs font-bold">
+              <div className="glass-effect rounded-2xl p-8 hover:glow-border transition-all duration-300 h-full relative overflow-hidden">
+                {/* Top badge row */}
+                <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+                  {/* Live indicator */}
+                  {project.demoUrl && (
+                    <span className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/15 border border-green-500/30 rounded-full text-xs font-semibold text-green-400">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
+                      </span>
+                      LIVE
+                    </span>
+                  )}
+                  {project.featured && (
+                    <span className="px-2.5 py-1 bg-gradient-to-r from-moon-glow/20 to-cosmic-purple/20 border border-moon-glow/30 rounded-full text-xs font-bold text-moon-glow">
                       ⭐ Featured
                     </span>
-                  </div>
-                )}
+                  )}
+                </div>
 
-                {/* Background Gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
+                {/* Animated background gradient on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-8 transition-opacity duration-500`} />
+                {/* Subtle top border glow on hover */}
+                <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r ${project.gradient} opacity-0 group-hover:opacity-60 transition-opacity duration-300`} />
 
                 <div className="relative z-10 space-y-6">
                   {/* Icon & Title */}
                   <div className="flex items-start gap-4">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} p-0.5 flex-shrink-0`}>
+                    <motion.div
+                      whileHover={{ rotate: 5 }}
+                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} p-0.5 flex-shrink-0`}
+                    >
                       <div className="w-full h-full rounded-xl bg-space-black flex items-center justify-center">
                         <project.icon className="w-7 h-7 text-cosmic-purple" />
                       </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-orbitron text-2xl font-bold text-star-white group-hover:text-cosmic-purple transition-colors mb-2">
+                    </motion.div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-orbitron text-xl font-bold text-star-white group-hover:text-cosmic-purple transition-colors duration-300 mb-2 leading-tight">
                         {project.title}
                       </h3>
-                      <p className="text-text-dim text-sm">{project.description}</p>
+                      <p className="text-text-dim text-sm leading-relaxed">{project.description}</p>
                     </div>
                   </div>
 
@@ -312,18 +364,18 @@ export default function Projects() {
 
                   {/* Action Buttons */}
                   {(project.demoUrl || project.githubUrl) && (
-                    <div className="flex gap-4 pt-4">
+                    <div className="flex gap-3 pt-4">
                       {project.demoUrl && (
                         <motion.a
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="flex-1 px-4 py-3 bg-gradient-to-r from-cosmic-purple to-nebula-pink rounded-lg font-semibold text-white shadow-lg shadow-cosmic-purple/50 hover:shadow-cosmic-purple/80 transition-all flex items-center justify-center gap-2 text-sm"
+                          whileHover={{ scale: 1.03, y: -2 }}
+                          whileTap={{ scale: 0.97 }}
+                          className="flex-1 px-4 py-3 bg-gradient-to-r from-cosmic-purple to-nebula-pink rounded-xl font-semibold text-white shadow-lg shadow-cosmic-purple/40 hover:shadow-cosmic-purple/70 transition-all flex items-center justify-center gap-2 text-sm"
                         >
-                          <ExternalLink className="w-4 h-4" />
-                          View Demo
+                          <Globe className="w-4 h-4" />
+                          Live Demo
                         </motion.a>
                       )}
                       {project.githubUrl && (
@@ -331,14 +383,14 @@ export default function Projects() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`px-4 py-3 glass-effect rounded-lg font-semibold hover:glow-border transition-all flex items-center justify-center gap-2 text-sm ${
+                          whileHover={{ scale: 1.03, y: -2 }}
+                          whileTap={{ scale: 0.97 }}
+                          className={`px-4 py-3 glass-effect rounded-xl font-semibold border border-white/10 hover:border-cosmic-purple/50 hover:text-cosmic-purple transition-all flex items-center justify-center gap-2 text-sm ${
                             project.demoUrl ? '' : 'flex-1'
                           }`}
                         >
-                          <Github className="w-4 h-4" />
-                          Code
+                          <Code2 className="w-4 h-4" />
+                          Source
                         </motion.a>
                       )}
                     </div>
@@ -347,9 +399,9 @@ export default function Projects() {
                   {/* Coming Soon Badge for projects without links */}
                   {!project.demoUrl && !project.githubUrl && (
                     <div className="pt-4">
-                      <div className="px-4 py-3 glass-effect rounded-lg text-center border border-cosmic-purple/30">
+                      <div className="px-4 py-3 glass-effect rounded-xl text-center border border-cosmic-purple/20 bg-cosmic-purple/5">
                         <span className="text-sm text-text-dim">
-                          <span className="text-cosmic-purple font-semibold">Under Development</span> - Coming Soon
+                          <span className="text-cosmic-purple font-semibold">Under Development</span> — Coming Soon
                         </span>
                       </div>
                     </div>
